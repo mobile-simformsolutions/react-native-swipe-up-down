@@ -8,14 +8,16 @@ import {
   Dimensions,
   LayoutAnimation,
   TouchableOpacity,
-  StatusBar
+  StatusBar,
+  StatusBarIOS
 } from 'react-native';
 
 import SwipeIcon from './components/SwipeIcon';
 import images from './assets/images';
 
-const MARGIN_TOP = Platform.OS === 'ios' ? 0 : 0;
-const DEVICE_HEIGHT = Dimensions.get('window').height;
+const MARGIN_TOP = Platform.OS === 'ios' ? 25 : 0;
+const DEVICE_HEIGHT = Dimensions.get('window').height - MARGIN_TOP;
+
 type Props = {
   hasRef?: () => void,
   swipeHeight?: number,
@@ -153,7 +155,7 @@ export default class SwipeUpDown extends Component<Props> {
         style={[
           styles.wrapSwipe,
           {
-            bottom: bottom || 0,
+            // bottom: bottom || 0,
             height: this.SWIPE_HEIGHT,
             marginTop: MARGIN_TOP,
             top:  DEVICE_HEIGHT-this.SWIPE_HEIGHT-bottom 
