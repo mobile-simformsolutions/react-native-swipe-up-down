@@ -85,7 +85,7 @@ export default class SwipeUpDown extends Component<Props> {
   }
 
   _onPanResponderMove(event, gestureState) {
-    if (gestureState.dy > 0 && !this.checkCollapsed) {
+    if (gestureState.dy > 60 && !this.checkCollapsed) {
       // SWIPE DOWN
 
       this.customStyle.style.top = this.top + gestureState.dy;
@@ -113,7 +113,8 @@ export default class SwipeUpDown extends Component<Props> {
   }
 
   _onPanResponderRelease(event, gestureState) {
-    if (gestureState.dy < -100 || gestureState.dy < 100) {
+    if (gestureState.dy < -100 || (gestureState.dy < 100 && gestureState.dy > 60)) {
+      console.log(gestureState.dy)
       this.showFull();
     } else {
       this.showMini();
@@ -148,6 +149,7 @@ export default class SwipeUpDown extends Component<Props> {
   render() {
     const { itemMini, itemFull, style, showSwipeIcon, bottom } = this.props;
     const { collapsed } = this.state;
+    
     return (
       <View
         ref={ref => (this.viewRef = ref)}
