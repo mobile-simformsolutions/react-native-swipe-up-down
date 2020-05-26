@@ -14,8 +14,11 @@ import {
 
 import SwipeIcon from './components/SwipeIcon';
 import images from './assets/images';
-
-const MARGIN_TOP = Platform.OS === 'ios' ? 25 : 0;
+const { width, height } = Dimensions.get('window');
+const MARGIN_TOP = Platform.OS === 'ios' &&
+!Platform.isPad &&
+!Platform.isTVOS &&
+(height === 812 || width === 812 || (height === 896 || width === 896)) ? 45 : 30
 const DEVICE_HEIGHT = Dimensions.get('window').height - MARGIN_TOP;
 
 type Props = {
