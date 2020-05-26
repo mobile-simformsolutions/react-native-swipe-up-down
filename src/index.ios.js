@@ -114,7 +114,7 @@ export default class SwipeUpDown extends Component<Props> {
 
   _onPanResponderRelease(event, gestureState) {
     if (gestureState.dy < -100 || (gestureState.dy < 100 && gestureState.dy > 60)) {
-      console.log(gestureState.dy)
+      // console.log(gestureState.dy)
       this.showFull();
     } else {
       this.showMini();
