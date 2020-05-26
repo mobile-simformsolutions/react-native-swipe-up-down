@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import {
   Platform,
@@ -14,7 +15,7 @@ import {
 import SwipeIcon from './components/SwipeIcon';
 import images from './assets/images';
 
-const MARGIN_TOP = Platform.OS === 'ios' ? -45 : 0;
+const MARGIN_TOP = 0;
 const DEVICE_HEIGHT = Dimensions.get('window').height;
 type Props = {
   hasRef?: () => void,
@@ -153,9 +154,10 @@ export default class SwipeUpDown extends Component<Props> {
         style={[
           styles.wrapSwipe,
           {
-            bottom: bottom || 0,
+            // bottom: bottom || 0,
             height: this.SWIPE_HEIGHT,
-            marginTop: MARGIN_TOP
+            marginTop: MARGIN_TOP,
+            top:  DEVICE_HEIGHT-this.SWIPE_HEIGHT-bottom+StatusBar.currentHeight
           },
           !itemMini && collapsed && { marginBottom: -200 },
           style
