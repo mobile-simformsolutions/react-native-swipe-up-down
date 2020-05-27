@@ -63,7 +63,6 @@ export default class SwipeUpDown extends Component<Props> {
   componentWillMount() {
     this._panResponder = PanResponder.create({
       onMoveShouldSetPanResponder: (event, gestureState) => {
-        console.log('_onMoveShouldSetPanResponder__', gestureState.dx, gestureState.dy);
         return !(Math.abs(gestureState.dx) < 5 && Math.abs(gestureState.dy) < 5);
       },
       onPanResponderMove: this._onPanResponderMove.bind(this),
