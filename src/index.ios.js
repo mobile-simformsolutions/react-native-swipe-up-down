@@ -16,9 +16,9 @@ import SwipeIcon from './components/SwipeIcon';
 import images from './assets/images';
 const { width, height } = Dimensions.get('window');
 const MARGIN_TOP = Platform.OS === 'ios' &&
-!Platform.isPad &&
-!Platform.isTVOS &&
-(height === 812 || width === 812 || (height === 896 || width === 896)) ? 45 : 30
+  !Platform.isPad &&
+  !Platform.isTVOS &&
+  (height === 812 || width === 812 || (height === 896 || width === 896)) ? 45 : 30
 const DEVICE_HEIGHT = Dimensions.get('window').height - MARGIN_TOP;
 
 type Props = {
@@ -60,10 +60,12 @@ export default class SwipeUpDown extends Component<Props> {
     this.showFull = this.showFull.bind(this);
   }
 
-  componentDidMount() {
-    this.props.hasRef && this.props.hasRef(this);
+  componentWillMount() {
     this._panResponder = PanResponder.create({
-      onMoveShouldSetPanResponder: (event, gestureState) => true,
+      onMoveShouldSetPanResponder: (event, gestureState) => {
+        console.log('_onMoveShouldSetPanResponder__', gestureState.dx, gestureState.dy);
+        return !(Math.abs(gestureState.dx) < 5 && Math.abs(gestureState.dy) < 5);
+      },
       onPanResponderMove: this._onPanResponderMove.bind(this),
       onPanResponderRelease: this._onPanResponderRelease.bind(this)
     });
@@ -152,7 +154,7 @@ export default class SwipeUpDown extends Component<Props> {
   render() {
     const { itemMini, itemFull, style, showSwipeIcon, bottom } = this.props;
     const { collapsed } = this.state;
-    
+
     return (
       <View
         ref={ref => (this.viewRef = ref)}
@@ -163,7 +165,7 @@ export default class SwipeUpDown extends Component<Props> {
             // bottom: bottom || 0,
             height: this.SWIPE_HEIGHT,
             marginTop: MARGIN_TOP,
-            top:  DEVICE_HEIGHT-this.SWIPE_HEIGHT-bottom 
+            top: DEVICE_HEIGHT - this.SWIPE_HEIGHT - bottom
           },
           !itemMini && collapsed && { marginBottom: -200 },
           style
@@ -186,8 +188,8 @@ export default class SwipeUpDown extends Component<Props> {
             </TouchableOpacity>
           ) : null
         ) : (
-          itemFull
-        )}
+            itemFull
+          )}
       </View>
     );
   }
