@@ -118,7 +118,7 @@ export default class SwipeUpDown extends Component<Props> {
 
   reset(){
     if (!this.checkCollapsed) {
-      const { onShowMini, itemMini, bottom } = this.props;
+      const { bottom } = this.props;
       // this.showFull();
     this.customStyle.style.top = 0;
     this.customStyle.style.height = DEVICE_HEIGHT - bottom;
@@ -127,7 +127,7 @@ export default class SwipeUpDown extends Component<Props> {
     StatusBar.setHidden(true)
     }
     else if (this.checkCollapsed) {
-    const { onShowMini, itemMini, bottom } = this.props;
+    const { itemMini, bottom } = this.props;
       // this.showMini();
      this.customStyle.style.top = itemMini
       ? DEVICE_HEIGHT - this.SWIPE_HEIGHT - bottom /*  - this.SWIPE_HEIGHT + 50 */
@@ -209,11 +209,11 @@ export default class SwipeUpDown extends Component<Props> {
               style={{ height: this.SWIPE_HEIGHT }}
               onPress={() => !this.disablePressToShow && this.showFull()}
             >
-              {itemMini}
+              {itemMini()}
             </TouchableOpacity>
           ) : null
         ) : (
-            itemFull
+            itemFull()
           )}
       </View>
     );
@@ -228,6 +228,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     left: 0,
-    right: 0,
+    right: 0
   }
 });
