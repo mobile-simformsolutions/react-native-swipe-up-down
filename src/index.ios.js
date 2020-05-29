@@ -116,13 +116,38 @@ export default class SwipeUpDown extends Component<Props> {
     }
   }
 
+  reset(){
+    if (!this.checkCollapsed) {
+      const { onShowMini, itemMini, bottom } = this.props;
+      // this.showFull();
+    this.customStyle.style.top = 0;
+    this.customStyle.style.height = DEVICE_HEIGHT - bottom;
+    this.updateNativeProps();
+     this.setState({ collapsed: false });
+    StatusBar.setHidden(true)
+    }
+    else if (this.checkCollapsed) {
+    const { onShowMini, itemMini, bottom } = this.props;
+      // this.showMini();
+     this.customStyle.style.top = itemMini
+      ? DEVICE_HEIGHT - this.SWIPE_HEIGHT - bottom /*  - this.SWIPE_HEIGHT + 50 */
+      : DEVICE_HEIGHT;
+    this.customStyle.style.height = itemMini ? this.SWIPE_HEIGHT : 0;
+    this.updateNativeProps();
+     this.setState({ collapsed: true });
+    StatusBar.setHidden(false)
+    }
+  }
+
   _onPanResponderRelease(event, gestureState) {
     if (gestureState.dy < -60) {
-      this.state.collapsed && this.setState({ collapsed: false });
       this.showFull();
-    } else if (gestureState.dy > 60) {
-      !this.state.collapsed && this.setState({ collapsed: true });
+    } 
+    else if (gestureState.dy > 60) {
       this.showMini();
+    }
+    else{
+     this.reset();
     }
   }
 
