@@ -126,7 +126,7 @@ export default class SwipeUpDown extends Component<Props> {
     const { itemMini, bottom } = this.props;
       // this.showMini();
       this.customStyle.style.top = itemMini
-      ? DEVICE_HEIGHT  + StatusBar.currentHeight - this.SWIPE_HEIGHT - bottom 
+      ? DEVICE_HEIGHT +(StatusBar.currentHeight > 25?StatusBar.currentHeight:0) - this.SWIPE_HEIGHT - bottom 
       : DEVICE_HEIGHT;
     this.customStyle.style.height = itemMini ? this.SWIPE_HEIGHT : 0;
     this.updateNativeProps();
@@ -162,7 +162,7 @@ export default class SwipeUpDown extends Component<Props> {
   showMini() {
     const { onShowMini, itemMini, bottom } = this.props;
     this.customStyle.style.top = itemMini
-      ? DEVICE_HEIGHT  + StatusBar.currentHeight - this.SWIPE_HEIGHT - bottom 
+      ? DEVICE_HEIGHT +(StatusBar.currentHeight > 25?StatusBar.currentHeight:0)- this.SWIPE_HEIGHT - bottom 
       : DEVICE_HEIGHT;
     this.customStyle.style.height = itemMini ? this.SWIPE_HEIGHT : 0;
     this.swipeIconRef && this.swipeIconRef.setState({ showIcon: false });
@@ -173,6 +173,7 @@ export default class SwipeUpDown extends Component<Props> {
   }
 
   render() {
+    // console.log(StatusBar.currentHeight)
     const { itemMini, itemFull, style, showSwipeIcon, bottom } = this.props;
     const { collapsed } = this.state;
     return (
@@ -185,12 +186,13 @@ export default class SwipeUpDown extends Component<Props> {
             // bottom: bottom || 0,
             height: this.SWIPE_HEIGHT,
             marginTop: MARGIN_TOP,
-            top:  DEVICE_HEIGHT-this.SWIPE_HEIGHT-bottom+StatusBar.currentHeight
+            top:  DEVICE_HEIGHT-this.SWIPE_HEIGHT-bottom +(StatusBar.currentHeight > 25 ?StatusBar.currentHeight:0)
           },
           !itemMini && collapsed && { marginBottom: -200 },
           style
         ]}
       >
+      {/* <StatusBar translucent={false} barStyle={'dark-content'} /> */}
         {
           showSwipeIcon && <SwipeIcon
             onClose={() => this.showMini()}
